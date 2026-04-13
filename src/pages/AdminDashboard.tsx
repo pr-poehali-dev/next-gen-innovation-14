@@ -13,6 +13,7 @@ interface Game {
   genre: string
   description: string
   size: string
+  downloadUrl: string
   addedAt: string
 }
 
@@ -26,9 +27,9 @@ interface TrustedUser {
 }
 
 const INITIAL_GAMES: Game[] = [
-  { id: "1", title: "Cyber Strike", genre: "Экшен", description: "Динамичный шутер в киберпанк-мире", size: "2.4 GB", addedAt: "2024-12-01" },
-  { id: "2", title: "Galaxy Quest", genre: "RPG", description: "Космическая ролевая игра", size: "5.1 GB", addedAt: "2024-12-10" },
-  { id: "3", title: "Shadow Realm", genre: "Хоррор", description: "Атмосферный хоррор-квест", size: "1.8 GB", addedAt: "2024-12-15" },
+  { id: "1", title: "Cyber Strike", genre: "Экшен", description: "Динамичный шутер в киберпанк-мире", size: "2.4 GB", downloadUrl: "", addedAt: "2024-12-01" },
+  { id: "2", title: "Galaxy Quest", genre: "RPG", description: "Космическая ролевая игра", size: "5.1 GB", downloadUrl: "", addedAt: "2024-12-10" },
+  { id: "3", title: "Shadow Realm", genre: "Хоррор", description: "Атмосферный хоррор-квест", size: "1.8 GB", downloadUrl: "", addedAt: "2024-12-15" },
 ]
 
 function getCredentials() {
@@ -49,7 +50,7 @@ function getTrustedUsers(): TrustedUser[] {
 export default function AdminDashboard() {
   const [games, setGames] = useState<Game[]>(INITIAL_GAMES)
   const [showAddForm, setShowAddForm] = useState(false)
-  const [newGame, setNewGame] = useState({ title: "", genre: "", description: "", size: "" })
+  const [newGame, setNewGame] = useState({ title: "", genre: "", description: "", size: "", downloadUrl: "" })
   const [siteTitle, setSiteTitle] = useState("GameVault")
   const [accentColor, setAccentColor] = useState("#ef4444")
   const [savedMsg, setSavedMsg] = useState("")
@@ -87,10 +88,11 @@ export default function AdminDashboard() {
       genre: newGame.genre || "Другое",
       description: newGame.description,
       size: newGame.size || "—",
+      downloadUrl: newGame.downloadUrl || "",
       addedAt: new Date().toISOString().split("T")[0],
     }
     setGames([...games, game])
-    setNewGame({ title: "", genre: "", description: "", size: "" })
+    setNewGame({ title: "", genre: "", description: "", size: "", downloadUrl: "" })
     setShowAddForm(false)
   }
 
@@ -277,6 +279,10 @@ export default function AdminDashboard() {
                   <div>
                     <Label className="text-gray-300 mb-1 block text-sm">Размер</Label>
                     <Input value={newGame.size} onChange={(e) => setNewGame({ ...newGame, size: e.target.value })} placeholder="1.2 GB" className="bg-black border-gray-700 text-white" />
+                  </div>
+                  <div className="sm:col-span-2">
+                    <Label className="text-gray-300 mb-1 block text-sm">Ссылка для скачивания</Label>
+                    <Input value={newGame.downloadUrl} onChange={(e) => setNewGame({ ...newGame, downloadUrl: e.target.value })} placeholder="https://..." className="bg-black border-gray-700 text-white" />
                   </div>
                   <div className="sm:col-span-2 flex gap-3">
                     <Button className="bg-red-500 hover:bg-red-600 text-white border-0" onClick={handleAddGame}>

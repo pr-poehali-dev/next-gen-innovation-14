@@ -10,6 +10,7 @@ interface Game {
   genre: string
   description: string
   size: string
+  downloadUrl: string
   addedAt: string
 }
 
@@ -21,9 +22,9 @@ interface TrustedUser {
 }
 
 const INITIAL_GAMES: Game[] = [
-  { id: "1", title: "Cyber Strike", genre: "Экшен", description: "Динамичный шутер в киберпанк-мире", size: "2.4 GB", addedAt: "2024-12-01" },
-  { id: "2", title: "Galaxy Quest", genre: "RPG", description: "Космическая ролевая игра", size: "5.1 GB", addedAt: "2024-12-10" },
-  { id: "3", title: "Shadow Realm", genre: "Хоррор", description: "Атмосферный хоррор-квест", size: "1.8 GB", addedAt: "2024-12-15" },
+  { id: "1", title: "Cyber Strike", genre: "Экшен", description: "Динамичный шутер в киберпанк-мире", size: "2.4 GB", downloadUrl: "", addedAt: "2024-12-01" },
+  { id: "2", title: "Galaxy Quest", genre: "RPG", description: "Космическая ролевая игра", size: "5.1 GB", downloadUrl: "", addedAt: "2024-12-10" },
+  { id: "3", title: "Shadow Realm", genre: "Хоррор", description: "Атмосферный хоррор-квест", size: "1.8 GB", downloadUrl: "", addedAt: "2024-12-15" },
 ]
 
 export default function TrustedDashboard() {
@@ -89,7 +90,7 @@ export default function TrustedDashboard() {
             Привет, {user.name}!
           </h2>
           <p className="text-gray-400 font-geist text-sm">
-            Ваша роль: <span className="text-red-400">{user.role}</span> · Только просмотр каталога игр
+            Ваша роль: <span className="text-red-400">{user.role}</span> · Просмотр и скачивание игр
           </p>
         </div>
 
@@ -97,7 +98,7 @@ export default function TrustedDashboard() {
         <div className="flex items-start gap-3 bg-red-500/10 border border-red-500/20 rounded-lg px-4 py-3 mb-8 max-w-2xl">
           <Icon name="Info" size={18} className="text-red-400 mt-0.5 flex-shrink-0" />
           <p className="text-gray-300 text-sm font-geist">
-            У вас есть доступ только для просмотра игр. Для управления каталогом обратитесь к администратору.
+            Вы можете просматривать и скачивать игры. Для управления каталогом обратитесь к администратору.
           </p>
         </div>
 
@@ -127,13 +128,26 @@ export default function TrustedDashboard() {
                 </div>
                 <h3 className="text-white font-semibold font-geist mb-1">{game.title}</h3>
                 <p className="text-gray-400 text-sm mb-3 leading-relaxed">{game.description}</p>
-                <div className="flex items-center justify-between text-xs text-gray-500 font-geist">
+                <div className="flex items-center justify-between text-xs text-gray-500 font-geist mb-4">
                   <span className="flex items-center gap-1">
                     <Icon name="HardDrive" size={12} />
                     {game.size}
                   </span>
                   <span>{game.addedAt}</span>
                 </div>
+                {game.downloadUrl ? (
+                  <a href={game.downloadUrl} target="_blank" rel="noopener noreferrer">
+                    <Button size="sm" className="w-full bg-red-500 hover:bg-red-600 text-white border-0 font-geist">
+                      <Icon name="Download" size={15} />
+                      Скачать
+                    </Button>
+                  </a>
+                ) : (
+                  <Button size="sm" disabled className="w-full bg-gray-800 text-gray-500 border-0 font-geist cursor-not-allowed">
+                    <Icon name="Clock" size={15} />
+                    Ссылка не добавлена
+                  </Button>
+                )}
               </CardContent>
             </Card>
           ))}
