@@ -4,9 +4,6 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Icon from "@/components/ui/icon"
 
-const ADMIN_LOGIN = "admin"
-const ADMIN_PASSWORD = "gamevault2024"
-
 export default function AdminLogin() {
   const [login, setLogin] = useState("")
   const [password, setPassword] = useState("")
@@ -18,8 +15,11 @@ export default function AdminLogin() {
     setLoading(true)
     setError("")
 
+    const storedLogin = localStorage.getItem("admin_login") || "admin"
+    const storedPassword = localStorage.getItem("admin_password") || "gamevault2024"
+
     setTimeout(() => {
-      if (login === ADMIN_LOGIN && password === ADMIN_PASSWORD) {
+      if (login === storedLogin && password === storedPassword) {
         localStorage.setItem("admin_auth", "true")
         window.location.href = "/admin/dashboard"
       } else {
