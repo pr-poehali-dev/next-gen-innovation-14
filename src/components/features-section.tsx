@@ -1,42 +1,43 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import Icon from "@/components/ui/icon"
 
 const features = [
   {
-    title: "Адаптивная нейрообработка",
-    description: "Самооптимизирующиеся алгоритмы, которые обучаются на нейронных паттернах и улучшают интерпретацию сигналов.",
-    icon: "brain",
-    badge: "ИИ",
+    title: "Загрузка игр",
+    description: "Быстрая загрузка игровых файлов любого формата. Поддержка архивов, exe, apk и других форматов.",
+    icon: "upload",
+    badge: "Хранилище",
   },
   {
-    title: "Медицинская защита",
-    description: "Шифрование по стандартам FDA со сквозной защитой конфиденциальных нейронных данных.",
-    icon: "lock",
-    badge: "Сертификат",
+    title: "Управление каталогом",
+    description: "Полный контроль над библиотекой игр — добавление, редактирование, удаление и организация по жанрам.",
+    icon: "grid",
+    badge: "Каталог",
   },
   {
-    title: "Интуитивное управление",
-    description: "Естественная трансляция мыслей в действия с откликом менее миллисекунды и точностью 99,7%.",
-    icon: "globe",
-    badge: "Точность",
+    title: "Редактор дизайна",
+    description: "Настройка внешнего вида платформы прямо из браузера без знаний программирования.",
+    icon: "palette",
+    badge: "Дизайн",
   },
   {
-    title: "Предиктивная калибровка",
-    description: "ML-модели, которые предугадывают намерения пользователя и оптимизируют нейронные пути.",
+    title: "Быстрый доступ",
+    description: "Мгновенная выдача файлов пользователям с контролем доступа и авторизацией.",
     icon: "zap",
-    badge: "Умный",
+    badge: "Скорость",
   },
   {
-    title: "Биометрическая интеграция",
-    description: "Бесшовная синхронизация с мониторингом жизненных показателей для контроля здоровья.",
-    icon: "link",
-    badge: "Связь",
+    title: "Административный доступ",
+    description: "Защищённая панель управления с разграничением прав и полным логированием действий.",
+    icon: "shield",
+    badge: "Безопасность",
   },
   {
-    title: "Поддержка XR",
-    description: "Нативная совместимость с AR/VR-средами для терапевтических и рабочих приложений.",
-    icon: "target",
-    badge: "XR Ready",
+    title: "Редактор контента",
+    description: "Управление текстами, изображениями и описаниями страниц прямо из админ-панели.",
+    icon: "edit",
+    badge: "CMS",
   },
 ]
 
@@ -44,10 +45,10 @@ export function FeaturesSection() {
   return (
     <section className="py-24 px-6 bg-background">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-foreground mb-4 font-sans">Возможности нового поколения</h2>
+        <div className="text-center mb-16" id="features">
+          <h2 className="text-4xl font-bold text-foreground mb-4 font-sans">Всё для управления играми</h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Почувствуйте будущее с технологиями, которые переопределяют возможное
+            Полный набор инструментов для загрузки, управления и настройки игровой платформы
           </p>
         </div>
 
@@ -60,13 +61,13 @@ export function FeaturesSection() {
             >
               <CardHeader>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-3xl">
-                    {feature.icon === "brain" && "&#129504;"}
-                    {feature.icon === "lock" && "&#128274;"}
-                    {feature.icon === "globe" && "&#127760;"}
-                    {feature.icon === "zap" && "&#9889;"}
-                    {feature.icon === "link" && "&#128279;"}
-                    {feature.icon === "target" && "&#127919;"}
+                  <span className="text-red-500">
+                    {feature.icon === "upload" && <Icon name="Upload" size={32} />}
+                    {feature.icon === "grid" && <Icon name="LayoutGrid" size={32} />}
+                    {feature.icon === "palette" && <Icon name="Palette" size={32} />}
+                    {feature.icon === "zap" && <Icon name="Zap" size={32} />}
+                    {feature.icon === "shield" && <Icon name="Shield" size={32} />}
+                    {feature.icon === "edit" && <Icon name="PenLine" size={32} />}
                   </span>
                   <Badge variant="secondary" className="bg-accent text-accent-foreground">
                     {feature.badge}
