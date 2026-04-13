@@ -20,6 +20,7 @@ interface TrustedUser {
   id: string
   name: string
   login: string
+  password: string
   role: string
   addedAt: string
 }
@@ -63,7 +64,7 @@ export default function AdminDashboard() {
 
   // Trusted users state
   const [trustedUsers, setTrustedUsers] = useState<TrustedUser[]>(getTrustedUsers)
-  const [newTrusted, setNewTrusted] = useState({ name: "", login: "", role: "Модератор" })
+  const [newTrusted, setNewTrusted] = useState({ name: "", login: "", password: "", role: "Модератор" })
   const [showTrustedForm, setShowTrustedForm] = useState(false)
   const [trustedMsg, setTrustedMsg] = useState<{ text: string; ok: boolean } | null>(null)
 
@@ -131,18 +132,19 @@ export default function AdminDashboard() {
 
   // Trusted users
   const handleAddTrusted = () => {
-    if (!newTrusted.name || !newTrusted.login) return
+    if (!newTrusted.name || !newTrusted.login || !newTrusted.password) return
     const user: TrustedUser = {
       id: Date.now().toString(),
       name: newTrusted.name,
       login: newTrusted.login,
+      password: newTrusted.password,
       role: newTrusted.role || "Модератор",
       addedAt: new Date().toISOString().split("T")[0],
     }
     const updated = [...trustedUsers, user]
     setTrustedUsers(updated)
     localStorage.setItem("trusted_users", JSON.stringify(updated))
-    setNewTrusted({ name: "", login: "", role: "Модератор" })
+    setNewTrusted({ name: "", login: "", password: "", role: "Модератор" })
     setShowTrustedForm(false)
     setTrustedMsg({ text: "Доверенное лицо добавлено", ok: true })
     setTimeout(() => setTrustedMsg(null), 2500)
@@ -166,6 +168,10 @@ export default function AdminDashboard() {
           </h1>
         </div>
         <div className="flex items-center gap-3">
+          <Button variant="outline" size="sm" onClick={() => window.open("/trusted", "_blank")} className="border-gray-700 text-gray-300 hover:text-white bg-transparent">
+            <Icon name="UserCheck" size={15} />
+            Вход для доверенных
+          </Button>
           <Button variant="outline" size="sm" onClick={() => window.open("/", "_blank")} className="border-gray-700 text-gray-300 hover:text-white bg-transparent">
             <Icon name="ExternalLink" size={15} />
             Сайт
@@ -395,6 +401,10 @@ export default function AdminDashboard() {
                   <div>
                     <Label className="text-gray-300 mb-1 block text-sm">Логин *</Label>
                     <Input value={newTrusted.login} onChange={(e) => setNewTrusted({ ...newTrusted, login: e.target.value })} placeholder="ivan123" className="bg-black border-gray-700 text-white" />
+                  </div>
+                  <div>
+                    <Label className="text-gray-300 mb-1 block text-sm">Пароль *</Label>
+                    <Input type="password" value={newTrusted.password} onChange={(e) => setNewTrusted({ ...newTrusted, password: e.target.value })} placeholder="••••••••" className="bg-black border-gray-700 text-white" />
                   </div>
                   <div>
                     <Label className="text-gray-300 mb-1 block text-sm">Роль</Label>
